@@ -3,7 +3,7 @@ from pyspark.sql.functions import col, sum, max, count
 from pyspark.sql.types import StructType, StructField, StringType, FloatType, TimestampType, IntegerType
 
 # Define Spark session
-spark = SparkSession.builder.master("local").appName("Top Bike by Day").getOrCreate()
+spark = SparkSession.builder.master("local").appName("Top Routes").getOrCreate()
 
 # Define CSV schema
 schema = StructType([
