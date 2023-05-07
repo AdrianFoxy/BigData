@@ -3,6 +3,7 @@ ApacheSpark/resources/
 Streaming/resources/
 Streaming/app/checkpoints/
 NoSQL_Task/resources/csv/
+NoSQL_Task/app/checkpoints/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
