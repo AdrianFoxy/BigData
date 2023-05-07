@@ -23,3 +23,5 @@ kafka_df.writeStream.format("kafka") \
     .option("checkpointLocation", "checkpoints") \
     .start() \
     .awaitTermination()
+
+
