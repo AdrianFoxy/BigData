@@ -1,6 +1,8 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col, count
 from trip_schema import schema
+from dotenv import load_dotenv
+import os
 
 spark = SparkSession.builder \
     .appName("KafkaToMongoDB") \
@@ -23,14 +25,19 @@ clean_df = df.selectExpr("CAST(value AS STRING)") \
 
 routes_df = clean_df.groupBy("start_station_name", "end_station_name") \
                      .agg(count("*").alias("trips_num")) \
-                     .orderBy("trips_num", ascending=False)
+                    .orderBy("trips_num", ascending=False)
+
+load_dotenv()
+MONGODB_USERNAME = os.getenv("MONGODB_USERNAME")
+MONGODB_PASSWORD = os.getenv("MONGODB_PASSWORD")
+
 def write_row(batch_df , batch_id):
     batch_df.write\
         .format("mongodb")\
         .mode("append")\
-        .option("spark.mongodb.connection.uri", "mongodb://root:rootpassword@localhost:27017") \
+        .option("spark.mongodb.connection.uri", f"mongodb://{MONGODB_USERNAME}:{MONGODB_PASSWORD}@localhost:27017") \
         .option("spark.mongodb.database", "bike_database") \
-        .option("spark.mongodb.collection", "routes_collection") \
+        .option("spark.mongodb.collection", "test_with_env_access_2") \
         .save()
     pass
 
