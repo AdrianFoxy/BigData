@@ -1,4 +1,4 @@
-from pyspark.sql.types import StructType, StructField, StringType, LongType
+from pyspark.sql.types import StructType, StructField, LongType, StringType, FloatType, TimestampType
 
 # Define CSV schema
 schema = StructType([
