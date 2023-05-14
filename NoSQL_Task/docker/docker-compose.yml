@@ -32,6 +32,45 @@ services:
     volumes:
       - /NoSQL_Task:/data/db
 
+  elasticsearch:
+    container_name: elastic
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1024m -Xmx1024m
+    ports:
+      - 9200:9200
+    volumes:
+      - ./volume/elastic:/usr/share/elasticsearch/data
+    restart: always
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:8.0.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elastic:9200
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+    restart: always
+
+  airflow:
+    container_name: airflow
+    build: ./Airflow/
+    depends_on:
+      - mongodb_container
+      - kafka
+      - elasticsearch
+    ports:
+      - 8080:8080
+    volumes:
+      - ../dags:/opt/airflow/dags
+      - ../app:/opt/airflow/app
+      - ../resources:/opt/resources
+    restart: always
+
 networks:
   default_network:
     name: docker_net

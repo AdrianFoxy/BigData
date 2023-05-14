@@ -37,7 +37,7 @@ def write_row(batch_df , batch_id):
         .mode("append")\
         .option("spark.mongodb.connection.uri", f"mongodb://{MONGODB_USERNAME}:{MONGODB_PASSWORD}@localhost:27017") \
         .option("spark.mongodb.database", "bike_database") \
-        .option("spark.mongodb.collection", "test_with_env_access_2") \
+        .option("spark.mongodb.collection", "top_trips_1") \
         .save()
     pass
 
@@ -47,6 +47,6 @@ query = routes_df \
     .foreachBatch(write_row) \
     .outputMode("complete") \
     .start()\
-    .awaitTermination()
+    .awaitTermination(60)
 
 
