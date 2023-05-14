@@ -22,6 +22,6 @@ kafka_df.writeStream.format("kafka") \
     .option("topic", "trip_topic") \
     .option("checkpointLocation", "checkpoints") \
     .start() \
-    .awaitTermination()
+    .awaitTermination(60)
 
 

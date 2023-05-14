@@ -4,6 +4,7 @@ Streaming/resources/
 Streaming/app/checkpoints/
 NoSQL_Task/resources/csv/
 NoSQL_Task/app/checkpoints/
+NoSQL_Task/docker/volume
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
